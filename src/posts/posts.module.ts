@@ -5,7 +5,7 @@ import { PostsService } from './posts.service';
 
 @Module({
   // imports: [TypeOrmModule.forFeature([Post])],
-  providers: [Post],
-  exports: [Post],
+  providers: [PostsService, Post],
+  exports: [PostsService, Post],
 })
 export class PostsModule {}

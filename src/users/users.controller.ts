@@ -1,15 +1,26 @@
-import { Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { User } from './user.entity';
+import { UsersService } from './users.service';
 
-@Controller("users")
+@Controller('users')
 export class UsersController {
+  constructor(private userService: UsersService) {}
 
-  @Get()
+  @Get('/')
   getUsers() {
-    return {
-      id: 2,
-      name: "test name",
-      password: "12345",
-      roles: ["admin", "user"]
-    };
+    return this.userService.findAll();
+  }
+
+  @Get('/:id')
+  getUser(@Param('id') id) {
+    if (!id) {
+      return this.userService.findAll();
+    }
+    return this.userService.findOneById(Number(id));
+  }
+
+  @Post('/user')
+  createUser(@Body() user: User) {
+    return this.userService.create(user);
   }
 }
